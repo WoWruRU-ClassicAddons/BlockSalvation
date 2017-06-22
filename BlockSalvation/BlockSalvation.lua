@@ -4,7 +4,7 @@ local BS_default = 0;
 function BS_OnLoad()
     this:RegisterEvent("PLAYER_AURAS_CHANGED");
     this:RegisterEvent("VARIABLES_LOADED");
-DEFAULT_CHAT_FRAME:AddMessage("Block Salvation, by Badger", 1, 1, 0.5);
+DEFAULT_CHAT_FRAME:AddMessage(BS_by_Badger, 1, 1, 0.5);
     SLASH_BS1 = "/BS";
     SlashCmdList["BS"] = function(msg)
 		BS_SlashCommand(msg);
@@ -12,7 +12,7 @@ DEFAULT_CHAT_FRAME:AddMessage("Block Salvation, by Badger", 1, 1, 0.5);
 end
 
 function BS_Init()
-    BS_PlayerName = UnitName("player").." of "..GetCVar("realmName");
+    BS_PlayerName = UnitName("player")..PofR..GetCVar("realmName");
 
     if (BS_CONFIG == nil) then
 	BS_CONFIG = {};
@@ -34,7 +34,7 @@ function BS_OnEvent()
 end
 
 function BS_SlashCommand(msg)
-    local BS_Status = "Off";
+    local BS_Status = BS_Off;
     if(msg == "on") then
       BS_on();
     elseif (msg == "off") then
@@ -42,11 +42,11 @@ function BS_SlashCommand(msg)
     else
       if ( DEFAULT_CHAT_FRAME ) then
 	if (BS_CONFIG[BS_PlayerName] == 1) then
-		BS_Status = "On";
+		BS_Status = BS_On;
 	end
-        DEFAULT_CHAT_FRAME:AddMessage("Block Salvation, by Badger (EU Aggramar), ", 1, 1, 0.5);
-        DEFAULT_CHAT_FRAME:AddMessage("Status: "..BS_Status, 1, 1, 0.5);
-        DEFAULT_CHAT_FRAME:AddMessage("Use: /bs on/off", 1, 1, 0.5);
+        DEFAULT_CHAT_FRAME:AddMessage(BS_by_Badger, 1, 1, 0.5);
+        DEFAULT_CHAT_FRAME:AddMessage(Status_BS..BS_Status, 1, 1, 0.5);
+        DEFAULT_CHAT_FRAME:AddMessage(BS_Use, 1, 1, 0.5);
       end
     end
 end
@@ -54,14 +54,14 @@ end
 function BS_on()
     BS_CONFIG[BS_PlayerName] = 1;
     if ( DEFAULT_CHAT_FRAME ) then
-      DEFAULT_CHAT_FRAME:AddMessage("BS: Salvation will now be cancelled.", 1, 1, 0.5);
+      DEFAULT_CHAT_FRAME:AddMessage(BS_cancelled, 1, 1, 0.5);
     end
 end
 
 function BS_off()
     BS_CONFIG[BS_PlayerName] = 0;
     if ( DEFAULT_CHAT_FRAME ) then
-      DEFAULT_CHAT_FRAME:AddMessage("BS: Salvation will no longer be cancelled.", 1, 1, 0.5);
+      DEFAULT_CHAT_FRAME:AddMessage(BS_l_cancelled, 1, 1, 0.5);
     end
 end
 
@@ -75,9 +75,9 @@ function BS_Kill()
 	local buffIndex, untilCancelled = GetPlayerBuff(i,"HELPFUL")
 	local texture = GetPlayerBuffTexture(buffIndex);
 
-	if ((string.find(texture,"SealOfSalvation")) or (string.find(texture,"GreaterBlessingofSalvation"))) then
+	if ((string.find(texture,"Spell_Holy_SealOfSalvation")) or (string.find(texture,"Spell_Holy_GreaterBlessingofSalvation"))) then
 	    CancelPlayerBuff(i);
-	    DEFAULT_CHAT_FRAME:AddMessage("BS: Salvation Blocked.", 1, 1, 0.5);
+	    DEFAULT_CHAT_FRAME:AddMessage(BS_Blocked, 1, 1, 0.5);
 	    return true;
 	end
     i = i + 1;

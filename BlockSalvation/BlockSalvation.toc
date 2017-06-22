@@ -1,6 +1,8 @@
 ## Interface: 11200
 ## Title: BlockSalvation
+## Notes-ruRU: Автоматическое снятие эффектов "Благословение спасения" и "Великое благословение спасения"
 ## Version: 1.0
 ## Author: Badger
 ## SavedVariables: BS_CONFIG
+localization.lua
 BlockSalvation.xml
